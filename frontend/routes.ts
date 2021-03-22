@@ -1,5 +1,5 @@
 import { Flow } from '@vaadin/flow-frontend';
-import { Route } from '@vaadin/router';
+import { Route, RouterLocation } from '@vaadin/router';
 import './views/main/main-view';
 
 const { serverSideRoutes } = new Flow({
@@ -38,3 +38,7 @@ export const routes: ViewRoute[] = [
     ],
   },
 ];
+
+export const isServerSideRoute = (location: RouterLocation): boolean => {
+  return serverSideRoutes.includes(location.route as any);
+};
