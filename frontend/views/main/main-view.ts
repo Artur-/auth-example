@@ -1,17 +1,20 @@
-import '@vaadin/vaadin-app-layout';
-import { AppLayoutElement } from '@vaadin/vaadin-app-layout';
-import '@vaadin/vaadin-app-layout/vaadin-drawer-toggle';
-import '@vaadin/vaadin-avatar/vaadin-avatar';
-import '@vaadin/vaadin-tabs';
-import '@vaadin/vaadin-tabs/vaadin-tab';
-import { customElement, html } from 'lit-element';
-import { router } from '../../index';
-import { ViewRoute, views } from '../../routes';
-import { appStore } from '../../stores/app-store';
-import { Layout } from '../view';
-import styles from './main-view.css';
+import "@vaadin/vaadin-app-layout";
+import { AppLayoutElement } from "@vaadin/vaadin-app-layout";
+import "@vaadin/vaadin-app-layout/vaadin-drawer-toggle";
+import "@vaadin/vaadin-avatar/vaadin-avatar";
+import "@vaadin/vaadin-tabs";
+import "@vaadin/vaadin-tabs/vaadin-tab";
+import { customElement, html } from "lit-element";
+import { router } from "../../index";
+import { appStore } from "../../stores/app-store";
+import { Layout } from "../view";
+import styles from "./main-view.css";
 
-@customElement('main-view')
+interface RouteInfo {
+  path: string;
+  title: string;
+}
+@customElement("main-view")
 export class MainView extends Layout {
   static get styles() {
     return [styles];
@@ -32,11 +35,17 @@ export class MainView extends Layout {
             <span>${appStore.applicationName}</span>
           </div>
           <hr />
-          <vaadin-tabs orientation="vertical" theme="minimal" .selected=${this.getSelectedViewRoute()}>
+          <vaadin-tabs
+            orientation="vertical"
+            theme="minimal"
+            .selected=${this.getSelectedViewRoute()}
+          >
             ${this.getMenuRoutes().map(
               (viewRoute) => html`
                 <vaadin-tab>
-                  <a href="${router.urlForPath(viewRoute.path)}" tabindex="-1">${viewRoute.title}</a>
+                  <a href="${router.urlForPath(viewRoute.path)}" tabindex="-1"
+                    >${viewRoute.title}</a
+                  >
                 </vaadin-tab>
               `
             )}
@@ -58,27 +67,31 @@ export class MainView extends Layout {
     );
   }
 
-  private getMenuRoutes(): ViewRoute[] {
-    const clientViews: ViewRoute[] = views.filter((route) => route.title);
-    const serverViews: ViewRoute[] = [
+  private getMenuRoutes(): RouteInfo[] {
+    const views: RouteInfo[] = [
       {
-        path: 'hello-java',
-        title: 'Hello Java',
-        component: '',
+        path: "public-java",
+        title: "Public Java",
       },
-
       {
-        path: 'hello-javahtml',
-        title: 'Hello JavaHTML',
-        component: '',
+        path: "private-java",
+        title: "Private Java",
+      },
+      {
+        path: "public-ts",
+        title: "Public TS",
+      },
+      {
+        path: "private-ts",
+        title: "Private TS",
       },
     ];
-    return [...clientViews, ...serverViews].sort((view1, view2) => view1.title!.localeCompare(view2.title!));
-
-    return views.filter((route) => route.title);
+    return views;
   }
 
   private getSelectedViewRoute(): number {
-    return this.getMenuRoutes().findIndex((viewRoute) => viewRoute.path == appStore.location);
+    return this.getMenuRoutes().findIndex(
+      (viewRoute) => viewRoute.path == appStore.location
+    );
   }
 }

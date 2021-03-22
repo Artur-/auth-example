@@ -10,7 +10,7 @@
 
     <properties>
         <java.version>8</java.version>
-        <vaadin.version>20.0.0.alpha3</vaadin.version>
+        <vaadin.version>20.0-SNAPSHOT</vaadin.version>
     </properties>
 
     <parent>
@@ -95,6 +95,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <!-- <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+        </dependency> 
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+        </dependency>
+-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
