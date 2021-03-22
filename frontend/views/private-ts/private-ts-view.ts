@@ -1,19 +1,16 @@
-import { showNotification } from "@vaadin/flow-frontend/a-notification";
-import "@vaadin/vaadin-button";
-import "@vaadin/vaadin-text-field";
-import { customElement, html } from "lit-element";
-import { View } from "../view";
+import { showNotification } from '@vaadin/flow-frontend/a-notification';
+import '@vaadin/vaadin-button';
+import '@vaadin/vaadin-text-field';
+import { customElement, html } from 'lit-element';
+import { View } from '../view';
 
-@customElement("private-ts-view")
+@customElement('private-ts-view')
 export class PrivateTSView extends View {
-  name: string = "";
+  name: string = '';
 
   render() {
     return html`
-      <vaadin-text-field
-        label="Your name"
-        @value-changed="${this.nameChanged}"
-      ></vaadin-text-field>
+      <vaadin-text-field label="Your name" @value-changed="${this.nameChanged}"></vaadin-text-field>
       <vaadin-button @click="${this.sayHello}">Say hello</vaadin-button>
     `;
   }

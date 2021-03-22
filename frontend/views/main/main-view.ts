@@ -1,20 +1,20 @@
-import "@vaadin/vaadin-app-layout";
-import { AppLayoutElement } from "@vaadin/vaadin-app-layout";
-import "@vaadin/vaadin-app-layout/vaadin-drawer-toggle";
-import "@vaadin/vaadin-avatar/vaadin-avatar";
-import "@vaadin/vaadin-tabs";
-import "@vaadin/vaadin-tabs/vaadin-tab";
-import { customElement, html } from "lit-element";
-import { router } from "../../index";
-import { appStore } from "../../stores/app-store";
-import { Layout } from "../view";
-import styles from "./main-view.css";
+import '@vaadin/vaadin-app-layout';
+import { AppLayoutElement } from '@vaadin/vaadin-app-layout';
+import '@vaadin/vaadin-app-layout/vaadin-drawer-toggle';
+import '@vaadin/vaadin-avatar/vaadin-avatar';
+import '@vaadin/vaadin-tabs';
+import '@vaadin/vaadin-tabs/vaadin-tab';
+import { customElement, html } from 'lit-element';
+import { router } from '../../index';
+import { appStore } from '../../stores/app-store';
+import { Layout } from '../view';
+import styles from './main-view.css';
 
 interface RouteInfo {
   path: string;
   title: string;
 }
-@customElement("main-view")
+@customElement('main-view')
 export class MainView extends Layout {
   static get styles() {
     return [styles];
@@ -35,17 +35,11 @@ export class MainView extends Layout {
             <span>${appStore.applicationName}</span>
           </div>
           <hr />
-          <vaadin-tabs
-            orientation="vertical"
-            theme="minimal"
-            .selected=${this.getSelectedViewRoute()}
-          >
+          <vaadin-tabs orientation="vertical" theme="minimal" .selected=${this.getSelectedViewRoute()}>
             ${this.getMenuRoutes().map(
               (viewRoute) => html`
                 <vaadin-tab>
-                  <a href="${router.urlForPath(viewRoute.path)}" tabindex="-1"
-                    >${viewRoute.title}</a
-                  >
+                  <a href="${router.urlForPath(viewRoute.path)}" tabindex="-1">${viewRoute.title}</a>
                 </vaadin-tab>
               `
             )}
@@ -70,28 +64,26 @@ export class MainView extends Layout {
   private getMenuRoutes(): RouteInfo[] {
     const views: RouteInfo[] = [
       {
-        path: "public-java",
-        title: "Public Java",
+        path: 'public-java',
+        title: 'Public Java',
       },
       {
-        path: "private-java",
-        title: "Private Java",
+        path: 'private-java',
+        title: 'Private Java',
       },
       {
-        path: "public-ts",
-        title: "Public TS",
+        path: 'public-ts',
+        title: 'Public TS',
       },
       {
-        path: "private-ts",
-        title: "Private TS",
+        path: 'private-ts',
+        title: 'Private TS',
       },
     ];
     return views;
   }
 
   private getSelectedViewRoute(): number {
-    return this.getMenuRoutes().findIndex(
-      (viewRoute) => viewRoute.path == appStore.location
-    );
+    return this.getMenuRoutes().findIndex((viewRoute) => viewRoute.path == appStore.location);
   }
 }
