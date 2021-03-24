@@ -30,6 +30,7 @@ vaadin-app-layout[dir='rtl'] header vaadin-avatar {
   align-items: center;
   box-sizing: border-box;
   display: flex;
+  flex-direction: column;
   padding: var(--lumo-space-s) var(--lumo-space-m);
 }
 

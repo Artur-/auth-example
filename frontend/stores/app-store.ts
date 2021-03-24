@@ -1,12 +1,14 @@
 import { RouterLocation } from '@vaadin/router';
 import { makeAutoObservable } from 'mobx';
 export class AppStore {
-  applicationName = 'Vaadin Auth Example';
+  applicationName = 'Bank of Vaadin';
 
   // The location, relative to the base path, e.g. "hello" when viewing "/hello"
   location = '';
 
   currentViewTitle = '';
+
+  name: string = 'John';
 
   constructor() {
     makeAutoObservable(this);

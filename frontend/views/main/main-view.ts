@@ -26,13 +26,12 @@ export class MainView extends Layout {
         <header slot="navbar" theme="dark">
           <vaadin-drawer-toggle></vaadin-drawer-toggle>
           <h1>${appStore.currentViewTitle}</h1>
-          <vaadin-avatar></vaadin-avatar>
+          <vaadin-avatar name="${appStore.name}"></vaadin-avatar>
         </header>
 
         <div slot="drawer">
           <div id="logo">
-            <img src="images/logo.png" alt="${appStore.applicationName} logo" />
-            <span>${appStore.applicationName}</span>
+            <img style="text-align: center" src="images/logo.jpg" alt="${appStore.applicationName} logo" />
           </div>
           <hr />
           <vaadin-tabs orientation="vertical" theme="minimal" .selected=${this.getSelectedViewRoute()}>
@@ -68,12 +67,12 @@ export class MainView extends Layout {
         title: 'Public Java',
       },
       {
-        path: 'private-java',
-        title: 'Private Java',
-      },
-      {
         path: 'public-ts',
         title: 'Public TS',
+      },
+      {
+        path: 'private-java',
+        title: 'Private Java',
       },
       {
         path: 'private-ts',

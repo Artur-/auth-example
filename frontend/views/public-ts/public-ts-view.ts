@@ -1,4 +1,3 @@
-import { showNotification } from '@vaadin/flow-frontend/a-notification';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
 import { customElement, html } from 'lit-element';
@@ -6,19 +5,11 @@ import { View } from '../view';
 
 @customElement('public-ts-view')
 export class PublicTSView extends View {
-  name: string = '';
-
   render() {
-    return html`
-      <vaadin-text-field label="Your name" @value-changed="${this.nameChanged}"></vaadin-text-field>
-      <vaadin-button @click="${this.sayHello}">Say hello</vaadin-button>
-    `;
-  }
-  nameChanged(e: CustomEvent) {
-    this.name = e.detail.value;
-  }
-
-  sayHello() {
-    showNotification(`Hello ${this.name}`);
+    return html`<div style="display:flex;flex-direction:column;height:100%">
+      <h1 style="text-align:center">Welcome to the Bank of Vaadin</h1>
+      <img style="max-width: 100%; min-height: 0" src="bank.jpg" />
+      <p>We are very great and have great amounts of money.</p>
+    </div>`;
   }
 }

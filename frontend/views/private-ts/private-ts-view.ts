@@ -1,24 +1,28 @@
-import { showNotification } from '@vaadin/flow-frontend/a-notification';
 import '@vaadin/vaadin-button';
 import '@vaadin/vaadin-text-field';
-import { customElement, html } from 'lit-element';
+import { BalanceEndpoint } from 'Frontend/generated/BalanceEndpoint';
+import { appStore } from 'Frontend/stores/app-store';
+import { customElement, html, internalProperty } from 'lit-element';
 import { View } from '../view';
 
 @customElement('private-ts-view')
 export class PrivateTSView extends View {
-  name: string = '';
+  @internalProperty()
+  private balance: number = 0;
 
   render() {
     return html`
-      <vaadin-text-field label="Your name" @value-changed="${this.nameChanged}"></vaadin-text-field>
-      <vaadin-button @click="${this.sayHello}">Say hello</vaadin-button>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;padding: var(--lumo-space-m);">
+        <span>Hello ${appStore.name}, your bank account balance is $${this.balance}.</span>
+
+        <vaadin-button @click="${this.applyForLoan}">Apply for a loan</vaadin-button>
+      </div>
     `;
   }
-  nameChanged(e: CustomEvent) {
-    this.name = e.detail.value;
-  }
+  applyForLoan() {}
 
-  sayHello() {
-    showNotification(`Hello ${this.name}`);
+  async connectedCallback() {
+    super.connectedCallback();
+    this.balance = await BalanceEndpoint.getBalance();
   }
 }
