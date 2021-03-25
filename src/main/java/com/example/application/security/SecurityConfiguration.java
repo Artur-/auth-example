@@ -35,6 +35,7 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
     protected void configureURLAccess(
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry,
             HttpSecurity http) throws Exception {
+        urlRegistry.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-java")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-ts")).permitAll();
         super.configureURLAccess(urlRegistry, http);

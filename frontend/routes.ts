@@ -11,6 +11,13 @@ export type ViewRoute = Route & { title?: string; children?: ViewRoute[] };
 export const views: ViewRoute[] = [
   // for client-side, place routes below (more info https://vaadin.com/docs/v19/flow/typescript/creating-routes.html)
   {
+    path: '',
+    component: 'empty-view',
+    action: async () => {
+      await import('./views/empty-view');
+    },
+  },
+  {
     path: 'private-ts',
     component: 'private-ts-view',
     title: 'Private TS',

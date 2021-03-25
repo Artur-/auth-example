@@ -32,7 +32,9 @@ export class MainView extends Layout {
 
         <div slot="drawer">
           <div id="logo">
-            <img style="text-align: center" src="images/logo.jpg" alt="${appStore.applicationName} logo" />
+            <a href="">
+              <img style="text-align: center" src="images/logo.jpg" alt="${appStore.applicationName} logo" />
+            </a>
           </div>
           <hr />
           <vaadin-tabs orientation="vertical" theme="minimal" .selected=${this.getSelectedViewRoute()}>
