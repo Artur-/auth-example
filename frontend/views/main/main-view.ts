@@ -29,7 +29,9 @@ export class MainView extends Layout {
         <header slot="navbar" theme="dark">
           <vaadin-drawer-toggle></vaadin-drawer-toggle>
           <h1>${appStore.currentViewTitle}</h1>
-          ${appStore.user ? html`<vaadin-avatar name="${appStore.user.name}"></vaadin-avatar>` : nothing}
+          ${appStore.user
+            ? html`<vaadin-avatar img="${appStore.user.imageUrl}" name="${appStore.user.username}"></vaadin-avatar>`
+            : html`<a router-ignore href="login">Sign in</a>`}
         </header>
 
         <div slot="drawer">

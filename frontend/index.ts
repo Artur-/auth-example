@@ -1,4 +1,5 @@
 import { Router, RouterLocation } from '@vaadin/router';
+import { UserInfoEndpoint } from './generated/UserInfoEndpoint';
 import { isServerSideRoute, routes } from './routes';
 import { appStore } from './stores/app-store';
 
@@ -15,3 +16,11 @@ window.addEventListener('vaadin-router-location-changed', (e) => {
     document.title = appStore.applicationName;
   }
 });
+
+UserInfoEndpoint.getUserInfo()
+  .then((info) => {
+    if (info) {
+      appStore.user = info;
+    }
+  })
+  .catch((e) => console.log('Ignoring user info error', e));

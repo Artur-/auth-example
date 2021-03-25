@@ -13,13 +13,16 @@ export class PrivateTSView extends View {
   render() {
     return html`
       <div style="display:flex;flex-direction:column;align-items:flex-start;padding: var(--lumo-space-m);">
-        <span>Hello ${appStore.user!.name}, your bank account balance is $${this.balance}.</span>
+        <span>Hello ${appStore.user!.username}, your bank account balance is $${this.balance}.</span>
 
         <vaadin-button @click="${this.applyForLoan}">Apply for a loan</vaadin-button>
       </div>
     `;
   }
-  applyForLoan() {}
+  async applyForLoan() {
+    await BalanceEndpoint.applyForLoan();
+    this.balance = await BalanceEndpoint.getBalance();
+  }
 
   async connectedCallback() {
     super.connectedCallback();

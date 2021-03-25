@@ -2,10 +2,9 @@ package com.example.application.views;
 
 import java.math.BigDecimal;
 
+import com.example.application.security.vaadinspring.SecurityUtils;
 import com.example.application.services.BankService;
-import com.example.application.services.UserService;
 import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,11 +17,9 @@ public class PrivateJavaView extends VerticalLayout {
 
     private BankService bankService;
     private Span balanceSpan = new Span();
-    private UserService userService;
 
-    public PrivateJavaView(UserService userService, BankService bankService) {
+    public PrivateJavaView(BankService bankService) {
         this.bankService = bankService;
-        this.userService = userService;
 
         updateBalanceText();
         add(balanceSpan);
@@ -30,7 +27,7 @@ public class PrivateJavaView extends VerticalLayout {
     }
 
     private void updateBalanceText() {
-        String name = userService.getName();
+        String name = SecurityUtils.getAuthenticatedUser().getUsername();
         BigDecimal balance = bankService.getBalance();
         this.balanceSpan.setText(String.format("Hello %s, your bank account balance is $%s.", name, balance));
 
@@ -38,5 +35,6 @@ public class PrivateJavaView extends VerticalLayout {
 
     private void applyForLoan(ClickEvent<Button> e) {
         bankService.applyForLoan();
+        updateBalanceText();
     }
 }

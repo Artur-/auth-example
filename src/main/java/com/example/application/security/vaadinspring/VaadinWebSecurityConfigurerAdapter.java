@@ -46,7 +46,8 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         // Spring CSRF is not compatible with Vaadin UIDL communication
         http.csrf().disable();
 
-        // Ensure automated requests to e.g. closing push channels or service workers
+        // Ensure automated requests to e.g. closing push channels, service workers,
+        // endpoints
         // are not counted as valid targets to redirect user to on login
         http.requestCache().requestCache(new NoInternalFrameworkRequestCache());
 
@@ -64,7 +65,7 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         urlRegistry.requestMatchers(VaadinFramework::isFrameworkInternalRequest).permitAll();
 
         // Allow all requests by logged in users.
-        urlRegistry.anyRequest().hasAnyRole("user", "admin");
+        urlRegistry.anyRequest().authenticated();
     }
 
     /**
@@ -81,9 +82,9 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         // formLogin.loginPage(LOGIN_URL).permitAll();
         // formLogin.loginProcessingUrl(LOGIN_PROCESSING_URL);
         // formLogin.failureUrl(LOGIN_FAILURE_URL);
-        http.httpBasic();
+        // http.httpBasic();
 
-        // http.logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
+        http.logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
 
     }
 

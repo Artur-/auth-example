@@ -1,6 +1,6 @@
 import { RouterLocation } from '@vaadin/router';
+import UserInfo from 'Frontend/generated/com/example/application/endpoints/UserInfo';
 import { makeAutoObservable } from 'mobx';
-import { UserInfo } from './user-info';
 export class AppStore {
   applicationName = 'Bank of Vaadin';
 

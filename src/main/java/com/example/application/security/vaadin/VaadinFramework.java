@@ -24,11 +24,24 @@ public class VaadinFramework {
 
     public static boolean isFrameworkInternalRequest(HttpServletRequest request) {
         String path = request.getPathInfo();
-        if (path == null || path.isEmpty()) {
+        // TODO Push close message unless covered already
+        if (path == null || path.isEmpty() || "/".equals(path)) {
             final String parameterValue = request.getParameter(ApplicationConstants.REQUEST_TYPE_PARAMETER);
             return parameterValue != null
                     && Stream.of(RequestType.values()).anyMatch(r -> r.getIdentifier().equals(parameterValue));
         }
+
         return false;
     }
+
+    public static boolean isEndpointRequest(HttpServletRequest request) {
+        String path = request.getPathInfo();
+        if (path == null) {
+            // FIXME: This is wrong but still works...
+            path = request.getRequestURI();
+
+        }
+        return path != null && path.startsWith("/connect/");
+    }
+
 }

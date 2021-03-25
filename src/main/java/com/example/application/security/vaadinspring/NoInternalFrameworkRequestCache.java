@@ -14,7 +14,11 @@ public class NoInternalFrameworkRequestCache extends HttpSessionRequestCache {
 		if (VaadinFramework.isFrameworkInternalRequest(request)) {
 			return;
 		}
+		if (VaadinFramework.isEndpointRequest(request)) {
+			return;
+		}
 
+		// TODO Push close message
 		super.saveRequest(request, response);
 	}
 

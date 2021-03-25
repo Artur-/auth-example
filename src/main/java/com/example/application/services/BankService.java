@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.example.application.endpoints.data.Account;
 import com.example.application.endpoints.data.AccountRepository;
+import com.example.application.security.vaadinspring.SecurityUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,13 +14,10 @@ import org.springframework.stereotype.Service;
 public class BankService {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private AccountRepository accountRepository;
 
     public void applyForLoan() {
-        String name = userService.getName();
+        String name = SecurityUtils.getAuthenticatedUser().getUsername();
         Optional<Account> acc = accountRepository.findByOwner(name);
         if (!acc.isPresent()) {
             return;
@@ -30,7 +28,7 @@ public class BankService {
     }
 
     public BigDecimal getBalance() {
-        String name = userService.getName();
+        String name = SecurityUtils.getAuthenticatedUser().getUsername();
         return accountRepository.findByOwner(name).map(Account::getBalance).orElse(null);
     }
 }
