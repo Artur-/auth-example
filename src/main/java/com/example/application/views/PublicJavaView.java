@@ -18,7 +18,7 @@ public class PublicJavaView extends FlexLayout {
         H1 header = new H1("Welcome to the Bank of Vaadin");
         header.getStyle().set("text-align", "center");
         add(header);
-        Image image = new Image("bank.jpg", "Bank");
+        Image image = new Image("images/bank.jpg", "Bank");
         image.getStyle().set("max-width", "100%").set("min-height", "0");
         add(image);
         add(new Paragraph("We are very great and have great amounts of money."));

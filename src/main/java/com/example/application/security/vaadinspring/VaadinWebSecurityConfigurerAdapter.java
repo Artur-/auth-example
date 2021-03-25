@@ -50,16 +50,15 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         // are not counted as valid targets to redirect user to on login
         http.requestCache().requestCache(new NoInternalFrameworkRequestCache());
 
-        configureURLAccess(http);
+        // Restrict access to the application
+        configureURLAccess(http.authorizeRequests(), http);
 
         configureLogin(http);
     }
 
-    protected void configureURLAccess(HttpSecurity http) throws Exception {
-        // Restrict access to the application
-        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry = http
-                .authorizeRequests();
-
+    protected void configureURLAccess(
+            ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry,
+            HttpSecurity http) throws Exception {
         // Vaadin internal requests must always be allowed and also need the security
         // context so they are here and not listed as static resources
         urlRegistry.requestMatchers(VaadinFramework::isFrameworkInternalRequest).permitAll();
