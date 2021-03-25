@@ -38,6 +38,11 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-java")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-ts")).permitAll();
+
+        // "/secret" is protected by the default rule to allow access only for
+        // authenticated useds and does not need to be listed here
+        urlRegistry.requestMatchers(new AntPathRequestMatcher("/admin-only/**")).hasRole("admin");
+
         super.configureURLAccess(urlRegistry, http);
     }
 

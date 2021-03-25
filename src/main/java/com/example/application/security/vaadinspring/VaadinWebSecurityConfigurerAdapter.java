@@ -44,6 +44,7 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
     protected void configure(HttpSecurity http) throws Exception {
         // Vaadin has its own CSRF protection.
         // Spring CSRF is not compatible with Vaadin UIDL communication
+        // FIXME: Ignore only for framework requests and connect endpoint calls
         http.csrf().disable();
 
         // Ensure automated requests to e.g. closing push channels, service workers,
