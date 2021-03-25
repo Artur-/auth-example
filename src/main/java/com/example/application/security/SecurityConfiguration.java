@@ -9,6 +9,7 @@ import com.example.application.security.vaadinspring.VaadinWebSecurityConfigurer
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -47,9 +48,10 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected List<String> getPublicResources() {
-        List<String> resources = super.getPublicResources();
-        resources.add("/images/*.jpg");
-        return resources;
+    public void configure(WebSecurity web) throws Exception {
+        super.configure(web);
+        // Allow public access to everything inside /images
+        web.ignoring().antMatchers("/images/*");
     }
+
 }

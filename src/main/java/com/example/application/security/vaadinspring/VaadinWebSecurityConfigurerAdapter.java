@@ -29,15 +29,8 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        List<String> staticResources = getPublicResources();
+        List<String> staticResources = VaadinFramework.getStaticResources();
         web.ignoring().antMatchers(staticResources.toArray(new String[staticResources.size()]));
-    }
-
-    /**
-     * Returns a list of public resources that all users will always have access to.
-     */
-    protected List<String> getPublicResources() {
-        return VaadinFramework.getStaticResources();
     }
 
     @Override
