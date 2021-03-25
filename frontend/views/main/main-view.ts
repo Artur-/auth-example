@@ -5,6 +5,7 @@ import '@vaadin/vaadin-avatar/vaadin-avatar';
 import '@vaadin/vaadin-tabs';
 import '@vaadin/vaadin-tabs/vaadin-tab';
 import { customElement, html } from 'lit-element';
+import { nothing } from 'lit-html';
 import { router } from '../../index';
 import { appStore } from '../../stores/app-store';
 import { Layout } from '../view';
@@ -14,6 +15,7 @@ interface RouteInfo {
   path: string;
   title: string;
   routerignore?: boolean;
+  requiresAuthentication?: boolean;
 }
 @customElement('main-view')
 export class MainView extends Layout {
@@ -27,7 +29,7 @@ export class MainView extends Layout {
         <header slot="navbar" theme="dark">
           <vaadin-drawer-toggle></vaadin-drawer-toggle>
           <h1>${appStore.currentViewTitle}</h1>
-          <vaadin-avatar name="${appStore.name}"></vaadin-avatar>
+          ${appStore.user ? html`<vaadin-avatar name="${appStore.user.name}"></vaadin-avatar>` : nothing}
         </header>
 
         <div slot="drawer">
@@ -78,18 +80,21 @@ export class MainView extends Layout {
       {
         path: 'private-java',
         title: 'Private Java',
+        requiresAuthentication: true,
       },
       {
         path: 'private-ts',
         title: 'Private TS',
+        requiresAuthentication: true,
       },
       {
         path: 'logout',
         title: 'Logout',
         routerignore: true,
+        requiresAuthentication: true,
       },
     ];
-    return views;
+    return views.filter((route) => !route.requiresAuthentication || !!appStore.user);
   }
 
   private getSelectedViewRoute(): number {

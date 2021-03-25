@@ -15,7 +15,7 @@ public class PublicJavaView extends FlexLayout {
         setFlexDirection(FlexDirection.COLUMN);
         setHeightFull();
 
-        H1 header = new H1("Welcome to the Bank of Vaadin");
+        H1 header = new H1("Welcome to the Java Bank of Vaadin");
         header.getStyle().set("text-align", "center");
         add(header);
         Image image = new Image("images/bank.jpg", "Bank");

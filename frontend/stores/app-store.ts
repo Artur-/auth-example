@@ -1,5 +1,6 @@
 import { RouterLocation } from '@vaadin/router';
 import { makeAutoObservable } from 'mobx';
+import { UserInfo } from './user-info';
 export class AppStore {
   applicationName = 'Bank of Vaadin';
 
@@ -8,7 +9,7 @@ export class AppStore {
 
   currentViewTitle = '';
 
-  name: string = 'John';
+  user: UserInfo | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
