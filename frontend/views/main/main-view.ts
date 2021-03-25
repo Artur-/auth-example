@@ -16,6 +16,7 @@ interface RouteInfo {
   title: string;
   routerignore?: boolean;
   requiresAuthentication?: boolean;
+  disable?: boolean;
 }
 @customElement('main-view')
 export class MainView extends Layout {
@@ -46,7 +47,7 @@ export class MainView extends Layout {
               (viewRoute) => html`
                 <vaadin-tab>
                   <a ?router-ignore=${viewRoute.routerignore} href="${router.urlForPath(viewRoute.path)}" tabindex="-1"
-                    >${viewRoute.title}</a
+                    >${viewRoute.title}${viewRoute.disable ? html` (hidden)` : nothing}</a
                   >
                 </vaadin-tab>
               `
@@ -96,7 +97,12 @@ export class MainView extends Layout {
         requiresAuthentication: true,
       },
     ];
-    return views.filter((route) => !route.requiresAuthentication || !!appStore.user);
+    views.forEach((route) => {
+      if (route.requiresAuthentication && !appStore.user) {
+        route.disable = true;
+      }
+    });
+    return views;
   }
 
   private getSelectedViewRoute(): number {
