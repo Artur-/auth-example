@@ -13,6 +13,7 @@ import styles from './main-view.css';
 interface RouteInfo {
   path: string;
   title: string;
+  routerignore?: boolean;
 }
 @customElement('main-view')
 export class MainView extends Layout {
@@ -38,7 +39,9 @@ export class MainView extends Layout {
             ${this.getMenuRoutes().map(
               (viewRoute) => html`
                 <vaadin-tab>
-                  <a href="${router.urlForPath(viewRoute.path)}" tabindex="-1">${viewRoute.title}</a>
+                  <a ?router-ignore=${viewRoute.routerignore} href="${router.urlForPath(viewRoute.path)}" tabindex="-1"
+                    >${viewRoute.title}</a
+                  >
                 </vaadin-tab>
               `
             )}
@@ -77,6 +80,11 @@ export class MainView extends Layout {
       {
         path: 'private-ts',
         title: 'Private TS',
+      },
+      {
+        path: 'logout',
+        title: 'Logout',
+        routerignore: true,
       },
     ];
     return views;

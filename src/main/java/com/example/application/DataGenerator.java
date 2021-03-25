@@ -21,6 +21,9 @@ public class DataGenerator {
 
     private static final LocalDateTime REF_TIME = LocalDateTime.of(2021, 1, 11, 0, 0, 0);
 
+    public static final String HARDCODED_USER1 = "John";
+    public static final String HARDCODED_USER2 = "Bianca";
+
     @Bean
     public CommandLineRunner loadData(AccountRepository accountRepository) {
         return args -> {
@@ -43,10 +46,8 @@ public class DataGenerator {
             for (Account a : accounts) {
                 a.setBalance(BigDecimal.valueOf(random.nextDouble() * 10000.0));
             }
-            accounts.get(0).setOwner("John");
-            accounts.get(1).setOwner("Bianca");
-            accounts.get(2).setOwner("Jeff");
-            accounts.get(3).setOwner("Melinda");
+            accounts.get(0).setOwner(HARDCODED_USER1);
+            accounts.get(1).setOwner(HARDCODED_USER2);
             accountRepository.saveAll(accounts);
 
             logger.info("Generated demo data");
