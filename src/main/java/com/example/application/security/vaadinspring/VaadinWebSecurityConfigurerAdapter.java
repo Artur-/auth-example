@@ -1,17 +1,11 @@
 package com.example.application.security.vaadinspring;
 
-import java.util.List;
-
 import com.example.application.security.vaadin.VaadinFramework;
 
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
-import org.springframework.security.config.annotation.web.configurers.FormLoginConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 
 public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
@@ -20,17 +14,13 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/";
 
-    protected VaadinWebSecurityConfigurerAdapter() {
-    }
-
     /**
      * The paths listed as "ignoring" in this method are handled without any Spring
      * Security involvement. They have no access to any security context etc.
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-        List<String> staticResources = VaadinFramework.getStaticResources();
-        web.ignoring().antMatchers(staticResources.toArray(new String[staticResources.size()]));
+        web.ignoring().antMatchers(VaadinFramework.getPublicResources());
     }
 
     @Override
@@ -58,8 +48,9 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         // Vaadin internal requests must always be allowed and also need the security
         // context so they are here and not listed as static resources
         urlRegistry.requestMatchers(VaadinFramework::isFrameworkInternalRequest).permitAll();
+        urlRegistry.antMatchers(VaadinFramework.getPublicResourcesRequiringSecurityContext()).permitAll();
 
-        // Allow all requests by logged in users.
+        // Allow other requests only by authenticated users
         urlRegistry.anyRequest().authenticated();
     }
 
