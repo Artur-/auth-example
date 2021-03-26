@@ -39,6 +39,9 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-java")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-ts")).permitAll();
+        // FIXME This should not be needed. I already annotated it with
+        // @AnonymousAllowed (also the URL is an internal detail)
+        urlRegistry.requestMatchers(new AntPathRequestMatcher("/connect/PublicEndpoint/getServerTime")).permitAll();
 
         // "/secret" is protected by the default rule to allow access only for
         // authenticated useds and does not need to be listed here
