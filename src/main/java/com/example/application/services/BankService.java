@@ -15,9 +15,11 @@ public class BankService {
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private SecurityUtils utils;
 
     public void applyForLoan() {
-        String name = SecurityUtils.getAuthenticatedUser().getUsername();
+        String name = utils.getAuthenticatedUser().getUsername();
         Optional<Account> acc = accountRepository.findByOwner(name);
         if (!acc.isPresent()) {
             return;
@@ -28,7 +30,7 @@ public class BankService {
     }
 
     public BigDecimal getBalance() {
-        String name = SecurityUtils.getAuthenticatedUser().getUsername();
+        String name = utils.getAuthenticatedUser().getUsername();
         return accountRepository.findByOwner(name).map(Account::getBalance).orElse(null);
     }
 }

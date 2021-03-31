@@ -17,9 +17,11 @@ public class PrivateJavaView extends VerticalLayout {
 
     private BankService bankService;
     private Span balanceSpan = new Span();
+    private SecurityUtils utils;
 
-    public PrivateJavaView(BankService bankService) {
+    public PrivateJavaView(BankService bankService, SecurityUtils utils) {
         this.bankService = bankService;
+        this.utils = utils;
 
         updateBalanceText();
         add(balanceSpan);
@@ -27,7 +29,7 @@ public class PrivateJavaView extends VerticalLayout {
     }
 
     private void updateBalanceText() {
-        String name = SecurityUtils.getAuthenticatedUser().getUsername();
+        String name = utils.getAuthenticatedUser().getUsername();
         BigDecimal balance = bankService.getBalance();
         this.balanceSpan.setText(String.format("Hello %s, your bank account balance is $%s.", name, balance));
 

@@ -3,14 +3,18 @@ package com.example.application.endpoints;
 import com.example.application.security.vaadinspring.SecurityUtils;
 import com.vaadin.flow.server.connect.Endpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Endpoint
 public class UserInfoEndpoint {
 
+    @Autowired
+    private SecurityUtils utils;
+
     public UserInfo getUserInfo() {
-        UserDetails user = SecurityUtils.getAuthenticatedUser();
+        UserDetails user = utils.getAuthenticatedUser();
         if (user == null) {
             return null;
         }

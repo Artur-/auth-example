@@ -3,13 +3,16 @@ package com.example.application.security.vaadinspring;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SecurityUtils {
+
     /**
      * Gets the authenticated user
      *
      */
-    public static UserDetails getAuthenticatedUser() {
+    public UserDetails getAuthenticatedUser() {
         SecurityContext context = SecurityContextHolder.getContext();
         Object principal = context.getAuthentication().getPrincipal();
         if (principal instanceof UserDetails) {
