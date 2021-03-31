@@ -37,8 +37,7 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
             ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry,
             HttpSecurity http) throws Exception {
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
-        urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-java")).permitAll();
-        urlRegistry.requestMatchers(new AntPathRequestMatcher("/public-ts")).permitAll();
+        urlRegistry.requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll();
         // FIXME This should not be needed. I already annotated it with
         // @AnonymousAllowed (also the URL is an internal detail)
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/connect/PublicEndpoint/getServerTime")).permitAll();

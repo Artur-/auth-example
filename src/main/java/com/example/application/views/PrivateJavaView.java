@@ -11,7 +11,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "private-java")
+@Route(value = "private/java")
 @PageTitle("Private Java")
 public class PrivateJavaView extends VerticalLayout {
 

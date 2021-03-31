@@ -73,20 +73,20 @@ export class MainView extends Layout {
   private getMenuRoutes(): RouteInfo[] {
     const views: RouteInfo[] = [
       {
-        path: 'public-java',
+        path: 'public/java',
         title: 'Public Java',
       },
       {
-        path: 'public-ts',
+        path: 'public/ts',
         title: 'Public TS',
       },
       {
-        path: 'private-java',
+        path: 'private/java',
         title: 'Private Java',
         requiresAuthentication: true,
       },
       {
-        path: 'private-ts',
+        path: 'private/ts',
         title: 'Private TS',
         requiresAuthentication: true,
       },

@@ -7,7 +7,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "public-java")
+@Route(value = "public/java")
 @PageTitle("Public Java")
 public class PublicJavaView extends FlexLayout {
 

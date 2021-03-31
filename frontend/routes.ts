@@ -18,7 +18,7 @@ export const views: ViewRoute[] = [
     },
   },
   {
-    path: 'private-ts',
+    path: 'private/ts',
     component: 'private-ts-view',
     title: 'Private TS',
     action: async () => {
@@ -26,7 +26,7 @@ export const views: ViewRoute[] = [
     },
   },
   {
-    path: 'public-ts',
+    path: 'public/ts',
     component: 'public-ts-view',
     title: 'Public TS',
     action: async () => {
