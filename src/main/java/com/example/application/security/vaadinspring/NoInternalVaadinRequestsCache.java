@@ -3,8 +3,6 @@ package com.example.application.security.vaadinspring;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.vaadin.flow.server.connect.EndpointUtil;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.stereotype.Component;
@@ -13,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class NoInternalVaadinRequestsCache extends HttpSessionRequestCache {
 
 	@Autowired
-	private EndpointUtil endpointUtil;
+	private EU endpointUtil;
 
 	@Autowired
 	private RequestUtil requestUtil;
