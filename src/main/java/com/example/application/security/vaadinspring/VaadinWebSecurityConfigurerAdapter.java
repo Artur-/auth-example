@@ -1,8 +1,7 @@
 package com.example.application.security.vaadinspring;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.vaadin.flow.server.HandlerHelper;
+import com.vaadin.flow.server.connect.EndpointUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +20,8 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
     private NoInternalVaadinRequestsCache requestCache;
 
     @Autowired
+    private EndpointUtil endpointUtil;
+    @Autowired
     private RequestUtil requestUtil;
 
     /**
@@ -38,7 +39,7 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
         // Spring CSRF is not compatible with Vaadin internal requests
         http.csrf().ignoringRequestMatchers(requestUtil::isFrameworkInternalRequest);
         // nor with endpoints
-        http.csrf().ignoringAntMatchers("/connect/**");
+        http.csrf().ignoringRequestMatchers(endpointUtil::isEndpointRequest);
 
         // Ensure automated requests to e.g. closing push channels, service workers,
         // endpoints are not counted as valid targets to redirect user to on login
