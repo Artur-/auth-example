@@ -20,7 +20,7 @@ public abstract class VaadinWebSecurityConfigurerAdapter extends WebSecurityConf
     private NoInternalVaadinRequestsCache requestCache;
 
     @Autowired
-    private EU endpointUtil;
+    private EndpointUtil endpointUtil;
     @Autowired
     private RequestUtil requestUtil;
 
