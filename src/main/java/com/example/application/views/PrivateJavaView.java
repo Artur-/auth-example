@@ -11,8 +11,11 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import javax.annotation.security.RolesAllowed;
+
 @Route(value = "private/java")
 @PageTitle("Private Java")
+@RolesAllowed("user")
 public class PrivateJavaView extends VerticalLayout {
 
     private BankService bankService;
@@ -29,6 +32,9 @@ public class PrivateJavaView extends VerticalLayout {
     }
 
     private void updateBalanceText() {
+        if (utils.getAuthenticatedUser() == null) {
+            throw new IllegalStateException("Unauthenticated user should not be able to open this view");
+        }
         String name = utils.getAuthenticatedUser().getUsername();
         BigDecimal balance = bankService.getBalance();
         this.balanceSpan.setText(String.format("Hello %s, your bank account balance is $%s.", name, balance));

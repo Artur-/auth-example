@@ -6,9 +6,11 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.connect.auth.AnonymousAllowed;
 
 @Route(value = "public/java")
 @PageTitle("Public Java")
+@AnonymousAllowed
 public class PublicJavaView extends FlexLayout {
 
     public PublicJavaView() {
