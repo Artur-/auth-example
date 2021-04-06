@@ -32,13 +32,9 @@ public class PrivateJavaView extends VerticalLayout {
     }
 
     private void updateBalanceText() {
-        if (utils.getAuthenticatedUser() == null) {
-            throw new IllegalStateException("Unauthenticated user should not be able to open this view");
-        }
         String name = utils.getAuthenticatedUser().getUsername();
         BigDecimal balance = bankService.getBalance();
         this.balanceSpan.setText(String.format("Hello %s, your bank account balance is $%s.", name, balance));
-
     }
 
     private void applyForLoan(ClickEvent<Button> e) {

@@ -1,10 +1,11 @@
 package com.example.application;
 
 import com.example.application.security.VaadinConnectAccessChecker;
+import com.example.application.security.vaadinspring.SecurityUtils;
+import com.example.application.views.PublicJavaView;
 import com.vaadin.flow.component.internal.JavaScriptBootstrapUI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterListener;
-import com.vaadin.flow.router.NotFoundException;
 import com.vaadin.flow.router.RouteNotFoundError;
 import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.UIInitEvent;
@@ -12,16 +13,20 @@ import com.vaadin.flow.server.UIInitListener;
 import com.vaadin.flow.server.VaadinRequest;
 import com.vaadin.flow.server.VaadinServiceInitListener;
 import com.vaadin.flow.server.VaadinServletRequest;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 @Component
 public class ServiceInitListener implements VaadinServiceInitListener, UIInitListener, BeforeEnterListener {
 
     private final VaadinConnectAccessChecker vaadinConnectAccessChecker = new VaadinConnectAccessChecker();
+    private final SecurityUtils securityUtils;
 
-    public ServiceInitListener() {
+    public ServiceInitListener(SecurityUtils securityUtils) {
+        this.securityUtils = securityUtils;
         vaadinConnectAccessChecker.enableCsrf(false);
     }
 
@@ -47,14 +52,17 @@ public class ServiceInitListener implements VaadinServiceInitListener, UIInitLis
                 .anyMatch(target -> target.isAssignableFrom(beforeEnterEvent.getNavigationTarget()))) {
             return;
         }
-
         VaadinServletRequest vaadinServletRequest = (VaadinServletRequest) VaadinRequest.getCurrent();
-        String error = vaadinConnectAccessChecker.check(
-                beforeEnterEvent.getNavigationTarget(),
-                vaadinServletRequest.getHttpServletRequest());
+        HttpServletRequest httpServletRequest = vaadinServletRequest.getHttpServletRequest();
+
+        String error = vaadinConnectAccessChecker.check(beforeEnterEvent.getNavigationTarget(), httpServletRequest);
         if (error != null) {
-            // TODO: Use Spring's AccessDeniedException? Reroute to login?
-            beforeEnterEvent.rerouteToError(NotFoundException.class);
+            if (securityUtils.getAuthenticatedUser() == null) {
+                // TODO: Forward or reroute to login (ideally supporting being forward back to the requested URL after logging in)
+                beforeEnterEvent.forwardTo(PublicJavaView.class);
+            } else {
+                beforeEnterEvent.rerouteToError(AccessDeniedException.class);
+            }
         }
     }
 }
