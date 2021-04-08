@@ -1,10 +1,9 @@
 package com.example.application.security;
 
 import java.util.Collections;
-import java.util.List;
 
 import com.example.application.DataGenerator;
-import com.example.application.security.vaadinspring.VaadinWebSecurityConfigurerAdapter;
+import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +21,11 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 
+    private static final String LOGIN_PROCESSING_URL = "/login";
+    private static final String LOGIN_FAILURE_URL = "/login?error";
+    private static final String LOGIN_URL = "/login";
+    private static final String LOGOUT_SUCCESS_URL = "/";
+
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -33,9 +37,9 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configureURLAccess(
-            ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry,
-            HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) throws Exception {
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry urlRegistry = http
+                .authorizeRequests();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/")).permitAll();
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/public/**")).permitAll();
         // FIXME This should not be needed. I already annotated it with
@@ -43,10 +47,19 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/connect/PublicEndpoint/getServerTime")).permitAll();
 
         // "/secret" is protected by the default rule to allow access only for
-        // authenticated useds and does not need to be listed here
+        // authenticated users and does not need to be listed here
         urlRegistry.requestMatchers(new AntPathRequestMatcher("/admin-only/**")).hasRole("admin");
 
-        super.configureURLAccess(urlRegistry, http);
+        super.configure(http);
+
+        // FormLoginConfigurer<HttpSecurity> formLogin =
+        http.formLogin();
+        // formLogin.loginPage(LOGIN_URL).permitAll();
+        // formLogin.loginProcessingUrl(LOGIN_PROCESSING_URL);
+        // formLogin.failureUrl(LOGIN_FAILURE_URL);
+        // http.httpBasic();
+
+        http.logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
     }
 
     @Override

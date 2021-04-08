@@ -1,5 +1,7 @@
 package com.example.application.endpoints;
 
+import javax.annotation.security.PermitAll;
+
 import com.example.application.security.vaadinspring.SecurityUtils;
 import com.vaadin.flow.server.connect.Endpoint;
 
@@ -8,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Endpoint
+@PermitAll
 public class UserInfoEndpoint {
 
     @Autowired
